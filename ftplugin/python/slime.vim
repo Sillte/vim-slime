@@ -13,7 +13,14 @@ function! _EscapeText_python(text)
     let dedented_lines = substitute(no_empty_lines, dedent_pat, "", "g")
     let except_pat = '\(elif\|else\|except\|finally\)\@!'
     let add_eol_pat = '\n\s[^\n]\+\n\zs\ze\('.except_pat.'\S\|$\)'
-    return substitute(dedented_lines, add_eol_pat, "\n", "g")
+    " Original revision:  `59d5e6c` 
+    " Environment: Windows10, Vim8.2
+    " When `ipython is used without `cpaste`, it is required to push `Enter`.
+    " key. On contrary, if you `cpaste`, then garbage `--` sometimes are
+    " mixed. 
+    " Hence, by adding `\<CR>` to the result. I'd like to counter-measure it.
+    " 
+    return substitute(dedented_lines, add_eol_pat, "\n", "g") . "\<CR>"
   end
 endfunction
 
