@@ -170,7 +170,7 @@ function! s:VimterminalSend(config, text)
     call term_wait(bufnr)
 
     " For `ipython`'s workaround.
-    call term_sendkeys(bufnr, "<CR>")
+    call term_sendkeys(bufnr, "\<CR>")
   endfor
 endfunction
 
