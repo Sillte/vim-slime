@@ -168,6 +168,9 @@ function! s:VimterminalSend(config, text)
   for l in split(a:text,'\n\zs')
     call term_sendkeys(bufnr,substitute(l,'\n',"\r",''))
     call term_wait(bufnr)
+
+    " For `ipython`'s workaround.
+    call term_sendkeys(bufnr, "<CR>")
   endfor
 endfunction
 

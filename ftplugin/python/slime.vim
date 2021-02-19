@@ -13,6 +13,8 @@ function! _EscapeText_python(text)
     let dedented_lines = substitute(no_empty_lines, dedent_pat, "", "g")
     let except_pat = '\(elif\|else\|except\|finally\)\@!'
     let add_eol_pat = '\n\s[^\n]\+\n\zs\ze\('.except_pat.'\S\|$\)'
+
+    return substitute(dedented_lines, add_eol_pat, "\n", "g")
     " Original revision:  `59d5e6c` 
     " Environment: Windows10, Vim8.2
     " When `ipython is used without `cpaste`, it is required to push `Enter`.
@@ -20,7 +22,9 @@ function! _EscapeText_python(text)
     " mixed. 
     " Hence, by adding `\<CR>` to the result. I'd like to counter-measure it.
     " 
-    return substitute(dedented_lines, add_eol_pat, "\n", "g") . "\<CR>"
+    " return substitute(dedented_lines, add_eol_pat, "\n", "g") . "\<CR>"
+    " (2021/02/19) However, this fails, and sometimes it crushes.
+    " Hence, the counter measure is taken by `slime.vim` `SendVimTerminal`.
   end
 endfunction
 
